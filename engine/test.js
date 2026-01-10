@@ -1,3 +1,4 @@
+const { runSQl } = require("../parser/sqlParser");
 const Database = require("./database");
 const Table = require("./Table");
 
@@ -12,17 +13,21 @@ const userColumns = {
 
 db.createTable("Users", userColumns);
 
-const users = db.getTable("Users");
+runSQl(
+  db,
+  "INSERT INTO Users (name,email) VALUES ('Peter', 'peter@gmail.com')"
+);
+runSQl(
+  db,
+  "INSERT INTO Users (name, email) VALUES ('Agnes', 'agnes123@gmai.com')"
+);
 
-//insert Rows
-users.insert({ name: "Peter", email: "peter@gmail.com" });
-users.insert({ name: "Agnes", email: "agnes@gmail.com" });
+runSQl(db, "DELETE FROM Users WHERE id = 2");
 
-console.log(users.selectAll());
+runSQl(
+  db,
+  "UPDATE Users SET name='Ivyne', email='Ivyne123@gmail.com' WHERE id=1"
+);
 
-users.updateById(1, { name: "peter Heri" });
-
-console.log(users.selectAll());
-
-users.deleteById(2);
-console.log(users.selectAll());
+const results = runSQl(db, "SELECT * FROM Users");
+console.log(results);
