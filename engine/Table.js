@@ -44,6 +44,20 @@ class Table {
     const deleted = this.rows.splice(index, 1);
     return deleted[0];
   }
+
+  joinTables(table1, table2, key1, key2) {
+    const results = [];
+
+    table1.selectAll().forEach((row1) => {
+      table2.selectAll().forEach((row2) => {
+        if (row1[key1] === row2[key2]) {
+          results.push({ ...row1, ...row2 });
+        }
+      });
+    });
+
+    return results;
+  }
 }
 
 module.exports = Table;

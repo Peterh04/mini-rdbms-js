@@ -9,8 +9,10 @@ function runSQl(db, command) {
     return handleDelete(db, command);
   } else if (command.toUpperCase().startsWith("UPDATE")) {
     return handleUpdate(db, command);
+  } else if (command.toUpperCase().includes("JOIN")) {
+    return handleInnerJoin(db, command);
   } else {
-    throw new Error("Umsupported SQL command");
+    throw new Error("Unsupported SQL command");
   }
 }
 
@@ -23,9 +25,11 @@ const handleInsert = (db, command) => {
   const [, tableName, columnns, values] = match;
 
   const colArray = columnns.split(",").map((column) => column.trim());
-  const valArray = values
-    .split(",")
-    .map((value) => value.trim().replace(/^'|'$/g, ""));
+  const valArray = values.split(",").map((value) => {
+    value = value.trim();
+    if (!isNaN(value)) return Number(value);
+    return value.replace(/^'|'$/g, "");
+  });
 
   const row = {};
   colArray.forEach((col, idx) => {
@@ -78,5 +82,20 @@ const handleUpdate = (db, command) => {
 
   const table = db.getTable(tableName);
   return table.updateById(parseInt(id), updates);
+};
+
+const handleInnerJoin = (db, command) => {
+  const regex =
+    /SELECT\s+\*\s+FROM\s+(\w+)\s+JOIN\s+(\w+)\s+ON\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)/i;
+
+  const match = command.match(regex);
+  if (!match) throw new Error("Invalid JOIN syntax");
+
+  const [, table1Name, table2Name, key1, key2] = match;
+
+  const table1 = db.getTable(table1Name);
+  const table2 = db.getTable(table2Name);
+
+  return table1.joinTables(table1, table2, key1, key2);
 };
 module.exports = { runSQl };
