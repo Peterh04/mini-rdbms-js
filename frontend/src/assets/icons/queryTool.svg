@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Database body -->
+  <ellipse cx="32" cy="14" rx="20" ry="8" fill="currentColor"/>
+  <rect x="12" y="14" width="40" height="28" fill="currentColor"/>
+  <ellipse cx="32" cy="42" rx="20" ry="8" fill="currentColor"/>
+
+  <!-- Centered Play button -->
+  <polygon points="26,22 26,38 38,30" fill="white"/>
+
+</svg>

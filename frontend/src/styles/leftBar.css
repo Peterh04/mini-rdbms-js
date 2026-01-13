@@ -1,0 +1,79 @@
+.left-bar-layout {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  width: 18%;
+
+  padding: 0.5rem 1.5rem;
+
+  border-right: 1px solid var(--secondary-bg-100);
+
+  background-color: transparent;
+}
+
+.left-bar-layout > .databases-container {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  position: relative;
+}
+
+.databases-container > .databases-container-heaader {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  gap: 0rem;
+}
+
+.databases-container-heaader > button {
+  background-color: transparent;
+  border: none;
+
+  color: var(--secondary-bg-200);
+}
+.databases-container-heaader > button > .fa {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+.databases-container-heaader > h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.3rem;
+}
+
+.databases-container > .databases-contaier-display {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  top: 25px;
+  left: 10px;
+
+  position: absolute;
+
+  visibility: hidden;
+}
+
+.databases-container > .databases-contaier-display.open {
+  visibility: visible;
+}
+
+.databases-contaier-display > .database {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  border-left: 1px solid var(--secondary-bg-100);
+
+  padding: 0.2rem;
+}

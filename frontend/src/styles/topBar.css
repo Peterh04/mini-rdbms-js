@@ -1,0 +1,40 @@
+.top-bar-layout {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 4vh;
+
+  border-top: 1px solid var(--secondary-bg-100);
+  border-bottom: 1px solid var(--secondary-bg-100);
+  background-color: transparent;
+}
+
+.top-bar-layout > .top-bar-control-name {
+  display: flex;
+  width: 18%;
+  height: 100%;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-right: 1px solid var(--secondary-bg-100);
+
+  background-color: transparent;
+
+  padding: 0rem 0.3rem;
+}
+
+.top-bar-control-name > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: gray;
+  border: none;
+  border-radius: 3px;
+}
+
+.top-bar-control-name > :hover {
+  background-color: rgb(32, 30, 30);
+  color: white;
+}
