@@ -1,7 +1,8 @@
 function runSQl(db, command) {
   command = command.trim();
-
-  if (command.toUpperCase().startsWith("INSERT INTO")) {
+  if (command.toUpperCase().startsWith("CREATE TABLE")) {
+    return handleCreateTable(db, command);
+  } else if (command.toUpperCase().startsWith("INSERT INTO")) {
     return handleInsert(db, command);
   } else if (command.toUpperCase().startsWith("SELECT")) {
     return handleSelect(db, command);
@@ -16,8 +17,29 @@ function runSQl(db, command) {
   }
 }
 
+const handleCreateTable = (db, command) => {
+  const regex = /CREATE\s+TABLE\s+(\w+)\s*\(([\s\S]+)\)/i;
+  const match = command.match(regex);
+
+  if (!match) throw new Error("Invalid CREATE TABLE syntax");
+
+  const tableName = match[1];
+  const columnsPart = match[2];
+
+  const columns = {};
+
+  columnsPart.split(",").forEach((col) => {
+    const [name, type] = col.trim().split(/\s+/);
+    columns[name] = { type: type.toUpperCase() };
+  });
+
+  db.createTable(tableName, columns);
+
+  return `Table ${tableName} created`;
+};
+
 const handleInsert = (db, command) => {
-  const regex = /INSERT INTO (\w+)\s*\((.+)\)\s*VALUES\s*\((.+)\)/i;
+  const regex = /INSERT INTO (\w+)\s*\(([\s\S]+?)\)\s*VALUES\s*\(([\s\S]+?)\)/i;
   const match = command.match(regex);
 
   if (!match) throw new Error("Invalid INSERT syntax");
@@ -52,7 +74,7 @@ const handleSelect = (db, command) => {
 };
 
 const handleDelete = (db, command) => {
-  const regex = /DELETE FROM (\w+)\s*WHERE\s*id\s*=\s*(\d+)/i;
+  const regex = /DELETE\s+FROM\s+(\w+)\s*WHERE\s*id\s*=\s*(\d+)/i;
   const match = command.match(regex);
 
   if (!match) throw new Error("Invalid DELETE syntax");
@@ -86,7 +108,7 @@ const handleUpdate = (db, command) => {
 
 const handleInnerJoin = (db, command) => {
   const regex =
-    /SELECT\s+\*\s+FROM\s+(\w+)\s+JOIN\s+(\w+)\s+ON\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)/i;
+    /SELECT\s+\*\s+FROM\s+(\w+)\s+JOIN\s+(\w+)\s+ON\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)/is;
 
   const match = command.match(regex);
   if (!match) throw new Error("Invalid JOIN syntax");

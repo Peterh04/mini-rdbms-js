@@ -18,6 +18,16 @@
   padding: 0.5rem;
 
   font-family: monospace;
+
+  position: relative;
+}
+
+.query-console-header > .runSqlBtn {
+  position: absolute;
+  right: 10px;
+
+  background: transparent;
+  border: none;
 }
 
 .query-console > .query-terminal {

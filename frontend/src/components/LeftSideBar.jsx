@@ -3,9 +3,9 @@ import "../styles/leftBar.css";
 import DatabaseIcon from "../assets/icons/database.svg?react";
 import RightArrowIcon from "../assets/icons/rightArrow.svg?react";
 import DownArrowIcon from "../assets/icons/downArrow.svg?react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function LeftSideBar() {
+export default function LeftSideBar({ tables }) {
   const [isDbCOtainerOpen, setIiDbCOtainerOpen] = useState(false);
   const [isDbDisplayOpen, setIsDbDisplayOpen] = useState(false);
 
@@ -30,7 +30,7 @@ export default function LeftSideBar() {
           </button>
           <h5>
             <DatabaseIcon className="fa" />
-            Databases(2)
+            Databases({Object.keys(tables).length})
           </h5>
         </div>
         <div
@@ -39,14 +39,12 @@ export default function LeftSideBar() {
           }`}
           aria-label="Databases Contaier Display"
         >
-          <div className="database" aria-label="database">
-            <DatabaseIcon className="fa" />
-            <h5>Users</h5>
-          </div>
-          <div className="database" aria-label="database">
-            <DatabaseIcon className="fa" />
-            <h5>Orders</h5>
-          </div>
+          {Object.keys(tables).map((key, indx) => (
+            <div className="database" aria-label="database" key={indx}>
+              <DatabaseIcon className="fa" />
+              <h5>{key}</h5>
+            </div>
+          ))}
         </div>
       </div>
     </div>

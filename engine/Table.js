@@ -1,3 +1,5 @@
+const DBError = require("./errors");
+
 class Table {
   constructor(name, columns) {
     this.name = name;
@@ -8,16 +10,29 @@ class Table {
 
   insert(data) {
     const row = { id: this.autoIncrement, ...data, createdAt: new Date() };
+
+    // Primary key check
     if (this.columns.id.primary) {
       if (this.rows.find((r) => r.id === row.id)) {
-        throw new Error(`Duplicates of primary key ${row.id}`);
+        throw new Error(`Duplicate primary key ${row.id}`);
       }
     }
 
     for (const colName in this.columns) {
       if (this.columns[colName].unique) {
-        if (this.rows.find((r) => r.colName) == row[colName]) {
-          throw new Error(`Duplicate unique value for column: ${colName}`);
+        if (this.rows.find((r) => r[colName] === row[colName])) {
+          throw new DBError(
+            `Duplicate unique value for column: ${colName}`,
+            "UNIQUE"
+          );
+        }
+      }
+    }
+
+    for (const colName in this.columns) {
+      if (this.columns[colName].notNull) {
+        if (row[colName] === null || row[colName] === undefined) {
+          throw new DBError(`Column ${colName} cannot be null`, "NOT_NULL");
         }
       }
     }
