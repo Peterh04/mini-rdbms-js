@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import "../styles/outputConsole.css";
 
-export default function OutputConsole({ output }) {
+export default function OutputConsole({ output, command, error }) {
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
   // const columns = ["Booking ID", "Guest Name", "Room Type", "Check-in"];
 
   useEffect(() => {
     const drawTable = () => {
-      if (output.length === 0) {
-        return;
-      } else {
+      if (command.match(/SELECT\s+\*\s+FROM\s+(\w+)/i) && output.length > 0) {
         setColumns(Object.keys(output[0]));
         setRows(output);
+      } else {
+        return;
       }
     };
 
@@ -28,7 +28,10 @@ export default function OutputConsole({ output }) {
         className="output-console-display"
         aria-label="output console display"
       >
-        {output.length > 0 && (
+        {error.errorStatus && (
+          <p className="errorMessage">Error : {error.errorMessage}</p>
+        )}
+        {output.length > 0 && !error.errorStatus ? (
           <table className="table">
             <colgroup>
               <col className="col-style" />
@@ -55,6 +58,8 @@ export default function OutputConsole({ output }) {
               ))}
             </tbody>
           </table>
+        ) : (
+          ""
         )}
       </div>
     </main>

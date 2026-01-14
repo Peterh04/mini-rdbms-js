@@ -3,7 +3,14 @@ import "../styles/queryConsole.css";
 import PlayIcon from "../assets/icons/play.svg?react";
 import axios from "axios";
 
-export default function QueryConsole({ tables, setTables, setOutput }) {
+export default function QueryConsole({
+  tables,
+  setTables,
+  setOutput,
+  setCommand,
+  error,
+  setError,
+}) {
   const [text, setText] = useState("");
   const lines = text.split("\n").length;
 
@@ -25,7 +32,6 @@ export default function QueryConsole({ tables, setTables, setOutput }) {
 
   const runSql = async () => {
     try {
-      console.log(text);
       const { data } = await axios.post(`http://localhost:5001/query`, {
         sql: text,
       });
@@ -36,6 +42,8 @@ export default function QueryConsole({ tables, setTables, setOutput }) {
       }
 
       setOutput(data.result);
+      setCommand(text);
+      setError({ ...error, errorStatus: false });
 
       const createTable = text.match(/CREATE TABLE (\w+)/i);
       if (createTable) {
@@ -54,8 +62,14 @@ export default function QueryConsole({ tables, setTables, setOutput }) {
           })
         );
       }
+
       console.log(data);
     } catch (err) {
+      setError({
+        errorStatus: true,
+        errorMessage: err.response?.data.error || err.message.error,
+      });
+
       console.error("Failed to run sql", err.response?.data || err.message);
     }
   };

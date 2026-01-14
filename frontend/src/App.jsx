@@ -7,11 +7,17 @@ import HomePage from "./pages/HomePage";
 function App() {
   const [tables, setTables] = useState({});
   const [output, setOutput] = useState([]);
+  const [command, setCommand] = useState("");
+  const [error, setError] = useState({
+    errorStatus: false,
+    errorMessage: "",
+  });
 
   useEffect(() => {
     const savedTables = JSON.parse(localStorage.getItem("tables")) || {};
     setTables(savedTables);
   }, []);
+
   return (
     <>
       <HomePage
@@ -19,6 +25,10 @@ function App() {
         setTables={setTables}
         output={output}
         setOutput={setOutput}
+        command={command}
+        setCommand={setCommand}
+        error={error}
+        setError={setError}
       />
     </>
   );
