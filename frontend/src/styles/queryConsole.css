@@ -3,7 +3,71 @@
   flex-direction: column;
 
   width: 100%;
-  height: 50vh;
+  height: 50%;
+}
 
-  background-color: red;
+.query-console > .query-console-header {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 4vh;
+
+  border-bottom: 1px solid var(--secondary-bg-100);
+
+  padding: 0.5rem;
+
+  font-family: monospace;
+}
+
+.query-console > .query-terminal {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+}
+
+.query-terminal > .query-terminal-numbering {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  width: 4%;
+
+  overflow-y: hidden;
+
+  align-items: center;
+
+  padding: 0.5rem 0;
+
+  background-color: var(--secondary-bg-100);
+}
+
+.query-terminal > .query-terminal-console {
+  display: flex;
+
+  width: 100%;
+  height: 100%;
+}
+
+.query-terminal-console > #sql-input {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  outline: none;
+  border: none;
+  resize: none;
+
+  padding: 0.5rem;
+
+  overflow: auto;
+  line-height: 1.5em;
+
+  background: transparent;
+
+  color: rgb(108, 155, 205);
 }

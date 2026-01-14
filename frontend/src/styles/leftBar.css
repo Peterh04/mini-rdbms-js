@@ -8,8 +8,6 @@
   padding: 0.5rem 1.5rem;
 
   border-right: 1px solid var(--secondary-bg-100);
-
-  background-color: transparent;
 }
 
 .left-bar-layout > .databases-container {

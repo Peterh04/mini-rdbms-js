@@ -1,6 +1,8 @@
 import "../styles/HomePage.css";
 import LeftSideBar from "../components/LeftSideBar";
 import TopBar from "../components/TopBar";
+import QueryConsole from "../components/QueryConsole";
+import OutputConsole from "../components/OutputConsole";
 
 export default function HomePage() {
   return (
@@ -8,6 +10,10 @@ export default function HomePage() {
       <TopBar />
       <div className="dispay-container">
         <LeftSideBar />
+        <div className="input-output-display-container">
+          <QueryConsole />
+          <OutputConsole />
+        </div>
       </div>
     </main>
   );
