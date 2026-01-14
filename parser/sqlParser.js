@@ -109,7 +109,6 @@ const handleUpdate = (db, command) => {
 const handleInnerJoin = (db, command) => {
   const regex =
     /SELECT\s+\*\s+FROM\s+(\w+)\s+JOIN\s+(\w+)\s+ON\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)/is;
-
   const match = command.match(regex);
   if (!match) throw new Error("Invalid JOIN syntax");
 
