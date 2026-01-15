@@ -5,18 +5,13 @@ import TopBar from "./components/TopBar";
 import HomePage from "./pages/HomePage";
 
 function App() {
-  const [tables, setTables] = useState({});
+  const [tables, setTables] = useState([]);
   const [output, setOutput] = useState([]);
   const [command, setCommand] = useState("");
   const [error, setError] = useState({
     errorStatus: false,
     errorMessage: "",
   });
-
-  useEffect(() => {
-    const savedTables = JSON.parse(localStorage.getItem("tables")) || {};
-    setTables(savedTables);
-  }, []);
 
   return (
     <>

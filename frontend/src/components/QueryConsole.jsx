@@ -45,25 +45,10 @@ export default function QueryConsole({
       setCommand(text);
       setError({ ...error, errorStatus: false });
 
-      const createTable = text.match(/CREATE TABLE (\w+)/i);
-      if (createTable) {
-        const tableName = createTable[1];
-
-        setTables((prev) => ({
-          ...prev,
-          [tableName]: data.result || [],
-        }));
-
-        localStorage.setItem(
-          "tables",
-          JSON.stringify({
-            ...tables,
-            [tableName]: data.result || [],
-          })
-        );
+      if (window.refreshTables) {
+        window.refreshTables();
       }
-
-      console.log(data);
+      setText("");
     } catch (err) {
       setError({
         errorStatus: true,

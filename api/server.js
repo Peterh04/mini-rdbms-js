@@ -11,16 +11,20 @@ const db = new Database();
 app.use(cors());
 app.use(bodyParser.json());
 
-db.createTable("Users", {
-  id: { type: "INT", primary: true, unique: true },
-  name: { type: "TEXT" },
-  email: { type: "TEXT", unique: true },
-});
-
-db.createTable("Orders", {
-  id: { type: "INT", primary: true, unique: true },
-  userId: { type: "INT" },
-  amount: { type: "INT" },
+app.get("/tables", (req, res) => {
+  try {
+    const tables = Object.keys(db.tables).map((tableName) => {
+      const table = db.getTable(tableName);
+      return {
+        name: tableName,
+        rows: table.selectAll(),
+        columns: Object.keys(table.columns),
+      };
+    });
+    res.json({ status: true, tables });
+  } catch (err) {
+    res.status(500).json({ success: false, errorr: err.message });
+  }
 });
 
 app.post("/query", (req, res) => {

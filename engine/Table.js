@@ -1,11 +1,12 @@
 const DBError = require("./errors");
 
 class Table {
-  constructor(name, columns) {
+  constructor(name, columns, database) {
     this.name = name;
     this.columns = columns;
     this.rows = [];
     this.autoIncrement = 1;
+    this.database = database;
   }
 
   insert(data) {
@@ -39,6 +40,7 @@ class Table {
 
     this.rows.push(row);
     this.autoIncrement++;
+    this.database.saveToFile();
     return row;
   }
 
@@ -50,6 +52,7 @@ class Table {
     const row = this.rows.find((r) => r.id === id);
     if (!row) throw new Error(`Row with id ${id} not found`);
     Object.assign(row, newData);
+    this.database.saveToFile();
     return row;
   }
 
@@ -57,6 +60,7 @@ class Table {
     const index = this.rows.findIndex((r) => r.id === id);
     if (index === -1) throw new Error(`Row with id ${id} not found`);
     const deleted = this.rows.splice(index, 1);
+    this.database.saveToFile();
     return deleted[0];
   }
 
