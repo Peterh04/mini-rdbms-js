@@ -29,8 +29,16 @@ const handleCreateTable = (db, command) => {
   const columns = {};
 
   columnsPart.split(",").forEach((col) => {
-    const [name, type] = col.trim().split(/\s+/);
-    columns[name] = { type: type.toUpperCase() };
+    const parts = col.trim().split(/\s+/);
+    const name = parts[0];
+    const type = parts[1];
+
+    columns[name] = {
+      type: type.toUpperCase(),
+      primary: parts.includes("PRIMARY"),
+      unique: parts.includes("UNIQUE"),
+      notNull: parts.includes("NOT") && parts.includes("NULL"),
+    };
   });
 
   db.createTable(tableName, columns);
@@ -113,7 +121,7 @@ const handleInnerJoin = (db, command) => {
 
   if (!match) throw new Error("Invalid JOIN syntax");
 
-  const [, table1Name, table2Name, t1Alias, key1, t2Alias, key2] = match;
+  const [, table1Name, table2Name, t1, key1, t2, key2] = match;
 
   const table1 = db.getTable(table1Name);
   const table2 = db.getTable(table2Name);

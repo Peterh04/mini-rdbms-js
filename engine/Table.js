@@ -12,28 +12,17 @@ class Table {
   insert(data) {
     const row = { id: this.autoIncrement, ...data, createdAt: new Date() };
 
-    // Primary key check
-    if (this.columns.id.primary) {
-      if (this.rows.find((r) => r.id === row.id)) {
-        throw new Error(`Duplicate primary key ${row.id}`);
-      }
-    }
-
-    for (const colName in this.columns) {
-      if (this.columns[colName].unique) {
-        if (this.rows.find((r) => r[colName] === row[colName])) {
-          throw new DBError(
-            `Duplicate unique value for column: ${colName}`,
-            "UNIQUE"
-          );
+    for (const col in this.columns) {
+      if (this.columns[col].primary || this.columns[col].unique) {
+        const exists = this.rows.find((r) => r[col] === row[col]);
+        if (exists) {
+          throw new DBError(`Duplicate value for column: ${col}`, "UNIQUE");
         }
       }
-    }
 
-    for (const colName in this.columns) {
-      if (this.columns[colName].notNull) {
-        if (row[colName] === null || row[colName] === undefined) {
-          throw new DBError(`Column ${colName} cannot be null`, "NOT_NULL");
+      if (this.columns[col].notNull) {
+        if (row[col] === null || row[col] === undefined) {
+          throw new DBError(`Column ${col} cannot be null`, "NOT_NULL");
         }
       }
     }
