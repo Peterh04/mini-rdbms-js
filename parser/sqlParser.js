@@ -17,6 +17,7 @@ function runSQl(db, command) {
     throw new Error("Unsupported SQL command");
   }
 }
+
 const handleCreateTable = (db, command) => {
   const regex = /CREATE\s+TABLE\s+(\w+)\s*\(([\s\S]+)\)/i;
   const match = command.match(regex);
@@ -33,11 +34,22 @@ const handleCreateTable = (db, command) => {
     const name = parts[0];
     const type = parts[1];
 
+    let notNull = false;
+    for (let i = 0; i < parts.length - 1; i++) {
+      if (
+        parts[i].toUpperCase() === "NOT" &&
+        parts[i + 1].toUpperCase() === "NULL"
+      ) {
+        notNull = true;
+        break;
+      }
+    }
+
     columns[name] = {
       type: type.toUpperCase(),
-      primary: parts.includes("PRIMARY"),
-      unique: parts.includes("UNIQUE"),
-      notNull: parts.includes("NOT") && parts.includes("NULL"),
+      primary: parts.some((p) => p.toUpperCase() === "PRIMARY"),
+      unique: parts.some((p) => p.toUpperCase() === "UNIQUE"),
+      notNull: notNull,
     };
   });
 
@@ -57,6 +69,7 @@ const handleInsert = (db, command) => {
   const colArray = columnns.split(",").map((column) => column.trim());
   const valArray = values.split(",").map((value) => {
     value = value.trim();
+    if (value.toUpperCase() === "NULL") return null;
     if (!isNaN(value)) return Number(value);
     return value.replace(/^'|'$/g, "");
   });

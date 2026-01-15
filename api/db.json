@@ -3,13 +3,28 @@
     "name": "Users",
     "columns": {
       "id": {
-        "type": "NUMBER"
+        "type": "INT",
+        "primary": true,
+        "unique": false,
+        "notNull": false
       },
       "name": {
-        "type": "STRING"
+        "type": "VARCHAR(50)",
+        "primary": false,
+        "unique": false,
+        "notNull": true
       },
       "email": {
-        "type": "STRING"
+        "type": "VARCHAR(100)",
+        "primary": false,
+        "unique": true,
+        "notNull": true
+      },
+      "createdAt": {
+        "type": "DATETIME",
+        "primary": false,
+        "unique": false,
+        "notNull": false
       }
     },
     "rows": [
@@ -17,56 +32,15 @@
         "id": 1,
         "name": "Alice",
         "email": "alice@gmail.com",
-        "createdAt": "2026-01-15T11:42:22.442Z"
+        "createdAt": "2026-01-15T15:35:30.333Z"
       },
       {
         "id": 2,
         "name": "Bob",
         "email": "bob@gmail.com",
-        "createdAt": "2026-01-15T11:42:30.157Z"
-      },
-      {
-        "id": 5,
-        "name": "peter",
-        "email": "bob@gmail.com",
-        "createdAt": "2026-01-15T14:40:39.801Z"
+        "createdAt": "2026-01-15T15:35:39.031Z"
       }
     ],
-    "autoIncrement": 6
-  },
-  "Posts": {
-    "name": "Posts",
-    "columns": {
-      "id": {
-        "type": "NUMBER"
-      },
-      "userId": {
-        "type": "NUMBER"
-      },
-      "title": {
-        "type": "STRING"
-      }
-    },
-    "rows": [
-      {
-        "id": 1,
-        "userId": 1,
-        "title": "Alice first post",
-        "createdAt": "2026-01-15T11:42:37.692Z"
-      },
-      {
-        "id": 2,
-        "userId": 2,
-        "title": "Bob first post",
-        "createdAt": "2026-01-15T11:42:44.087Z"
-      },
-      {
-        "id": 3,
-        "userId": 1,
-        "title": "Alice second post",
-        "createdAt": "2026-01-15T11:42:58.559Z"
-      }
-    ],
-    "autoIncrement": 4
+    "autoIncrement": 3
   }
 }
