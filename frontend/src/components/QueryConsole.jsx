@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "../styles/queryConsole.css";
 import PlayIcon from "../assets/icons/play.svg?react";
+import GreyPlayIcon from "../assets/icons/greyPlay.svg?react";
 import axios from "axios";
 
 export default function QueryConsole({
-  tables,
-  setTables,
   setOutput,
   setCommand,
   error,
   setError,
+  text,
+  setText,
+  loading,
+  setLoading,
 }) {
-  const [text, setText] = useState("");
   const lines = text.split("\n").length;
 
   const textareaRef = useRef(null);
@@ -32,6 +34,7 @@ export default function QueryConsole({
 
   const runSql = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post(`http://localhost:5001/query`, {
         sql: text,
       });
@@ -44,16 +47,17 @@ export default function QueryConsole({
       setOutput(data.result);
       setCommand(text);
       setError({ ...error, errorStatus: false });
+      setLoading(false);
 
       if (window.refreshTables) {
         window.refreshTables();
       }
-      setText("");
     } catch (err) {
       setError({
         errorStatus: true,
         errorMessage: err.response?.data.error || err.message.error,
       });
+      setLoading(false);
 
       console.error("Failed to run sql", err.response?.data || err.message);
     }
@@ -63,9 +67,15 @@ export default function QueryConsole({
     <main className="query-console" aria-label="query console">
       <div className="query-console-header" aria-label="query console header">
         <h4>Query</h4>
-        <button className="runSqlBtn" onClick={runSql}>
-          <PlayIcon className="fa" />
-        </button>
+        {loading ? (
+          <button className="runSqlBtn">
+            <GreyPlayIcon className="fa" />
+          </button>
+        ) : (
+          <button className="runSqlBtn" onClick={runSql}>
+            <PlayIcon className="fa" />
+          </button>
+        )}
       </div>
       <div className="query-terminal" aria-label="Query Terminal">
         <div

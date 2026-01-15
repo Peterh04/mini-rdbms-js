@@ -15,7 +15,7 @@
   height: 100%;
 
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   border-right: 1px solid var(--secondary-bg-100);
 
@@ -26,15 +26,7 @@
 
 .top-bar-control-name > button {
   display: flex;
-  justify-content: center;
-  align-items: center;
 
-  background-color: gray;
+  background-color: transparent;
   border: none;
-  border-radius: 3px;
-}
-
-.top-bar-control-name > :hover {
-  background-color: rgb(32, 30, 30);
-  color: white;
 }

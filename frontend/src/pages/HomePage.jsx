@@ -15,13 +15,16 @@ export default function HomePage({
   setCommand,
   error,
   setError,
+  text,
+  setText,
+  loading,
+  setLoading,
 }) {
   useEffect(() => {
     const getTables = async () => {
       try {
         const { data } = await axios.get("http://localhost:5001/tables");
         setTables(data.tables);
-        console.log(data.tables);
       } catch (err) {
         console.error(
           "Failed to fetch tables",
@@ -38,7 +41,15 @@ export default function HomePage({
     <main className="homePage" aria-label="home page">
       <TopBar />
       <div className="dispay-container">
-        <LeftSideBar tables={tables} />
+        <LeftSideBar
+          tables={tables}
+          setError={setError}
+          error={error}
+          setCommand={setCommand}
+          setOutput={setOutput}
+          setText={setText}
+          setLoading={setLoading}
+        />
         <div className="input-output-display-container">
           <QueryConsole
             tables={tables}
@@ -47,6 +58,10 @@ export default function HomePage({
             setCommand={setCommand}
             error={error}
             setError={setError}
+            text={text}
+            setText={setText}
+            loading={loading}
+            setLoading={setLoading}
           />
           <OutputConsole output={output} command={command} error={error} />
         </div>

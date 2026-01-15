@@ -12,6 +12,8 @@ function App() {
     errorStatus: false,
     errorMessage: "",
   });
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -24,6 +26,10 @@ function App() {
         setCommand={setCommand}
         error={error}
         setError={setError}
+        text={text}
+        setText={setText}
+        loading={loading}
+        setLoading={setLoading}
       />
     </>
   );

@@ -1,133 +1,70 @@
 {
-  "Skills": {
-    "name": "Skills",
+  "Users": {
+    "name": "Users",
     "columns": {
       "id": {
-        "type": "INT"
+        "type": "NUMBER"
       },
       "name": {
-        "type": "VARCHAR(255)"
+        "type": "STRING"
       },
-      "level": {
-        "type": "VARCHAR(50)"
-      },
-      "category": {
-        "type": "VARCHAR(100)"
-      },
-      "description": {
-        "type": "VARCHAR(255)"
-      },
-      "createdAt": {
-        "type": "DATETIME"
+      "email": {
+        "type": "STRING"
       }
     },
     "rows": [
       {
         "id": 1,
-        "name": "JavaScript",
-        "level": "Advanced",
-        "category": "Programming",
-        "description": "Frontend and backend scripting",
-        "createdAt": "2026-01-15T09:13:47.051Z"
+        "name": "Alice",
+        "email": "alice@gmail.com",
+        "createdAt": "2026-01-15T11:42:22.442Z"
       },
       {
         "id": 2,
-        "name": "React",
-        "level": "Beginner",
-        "category": "Frontend",
-        "description": "UI library for building components",
-        "createdAt": "2026-01-15T09:14:49.344Z"
+        "name": "Bob",
+        "email": "bob@gmail.com",
+        "createdAt": "2026-01-15T11:42:30.157Z"
+      },
+      {
+        "id": 5,
+        "name": "peter",
+        "email": "bob@gmail.com",
+        "createdAt": "2026-01-15T14:40:39.801Z"
       }
     ],
-    "autoIncrement": 4
+    "autoIncrement": 6
   },
-  "Projects": {
-    "name": "Projects",
+  "Posts": {
+    "name": "Posts",
     "columns": {
       "id": {
-        "type": "INT"
-      },
-      "title": {
-        "type": "VARCHAR(255)"
-      },
-      "client": {
-        "type": "VARCHAR(255)"
-      },
-      "budget": {
-        "type": "INT"
-      },
-      "status": {
-        "type": "VARCHAR(100)"
-      },
-      "startDate": {
-        "type": "DATETIME"
-      }
-    },
-    "rows": [
-      {
-        "id": 1,
-        "title": "E-commerce Website",
-        "client": "ShopEasy Ltd",
-        "budget": 150000,
-        "status": "Completed",
-        "createdAt": "2026-01-15T09:19:32.279Z"
-      },
-      {
-        "id": 2,
-        "title": "School Portal",
-        "client": "ASU",
-        "budget": 90000,
-        "status": "Completed",
-        "createdAt": "2026-01-15T09:22:37.069Z"
-      },
-      {
-        "id": 3,
-        "title": "Travel Booking App",
-        "client": "SafariGo",
-        "budget": 120000,
-        "status": "Pending",
-        "createdAt": "2026-01-15T09:22:51.377Z"
-      }
-    ],
-    "autoIncrement": 4
-  },
-  "ProjectAssignments": {
-    "name": "ProjectAssignments",
-    "columns": {
-      "id": {
-        "type": "INT"
+        "type": "NUMBER"
       },
       "userId": {
-        "type": "INT"
+        "type": "NUMBER"
       },
-      "projectId": {
-        "type": "INT"
-      },
-      "role": {
-        "type": "VARCHAR(100)"
+      "title": {
+        "type": "STRING"
       }
     },
     "rows": [
       {
         "id": 1,
         "userId": 1,
-        "projectId": 1,
-        "role": "Manager",
-        "createdAt": "2026-01-15T09:25:03.009Z"
+        "title": "Alice first post",
+        "createdAt": "2026-01-15T11:42:37.692Z"
       },
       {
         "id": 2,
         "userId": 2,
-        "projectId": 1,
-        "role": "Developer",
-        "createdAt": "2026-01-15T09:25:12.460Z"
+        "title": "Bob first post",
+        "createdAt": "2026-01-15T11:42:44.087Z"
       },
       {
         "id": 3,
         "userId": 1,
-        "projectId": 3,
-        "role": "Consultant",
-        "createdAt": "2026-01-15T09:25:21.192Z"
+        "title": "Alice second post",
+        "createdAt": "2026-01-15T11:42:58.559Z"
       }
     ],
     "autoIncrement": 4
