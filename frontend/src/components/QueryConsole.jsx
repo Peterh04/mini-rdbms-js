@@ -45,6 +45,7 @@ export default function QueryConsole({
       }
 
       setOutput(data.result);
+      console.log(data);
       setCommand(text);
       setError({ ...error, errorStatus: false });
       setLoading(false);

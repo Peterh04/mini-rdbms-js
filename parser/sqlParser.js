@@ -84,14 +84,24 @@ const handleInsert = (db, command) => {
 };
 
 const handleSelect = (db, command) => {
-  const regex = /SELECT\s+\*\s+FROM\s+(\w+)/i;
+  const regex = /SELECT\s+\*\s+FROM\s+(\w+)(?:\s+WHERE\s+(\w+)\s*=\s*(.+))?/i;
   const match = command.match(regex);
 
   if (!match) throw new Error("Invalid SELECT syntax");
 
   const tableName = match[1];
+  let whereColumn = match[2];
+  let whereValue = match[3];
+
   const table = db.getTable(tableName);
-  return table.selectAll();
+
+  if (whereColumn && whereValue !== undefined) {
+    whereValue = whereValue.trim().replace(/^'|'$/g, "").toString();
+
+    return table.selectWhere(whereColumn, whereValue);
+  } else {
+    return table.selectAll();
+  }
 };
 
 const handleDelete = (db, command) => {
